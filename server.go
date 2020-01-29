@@ -20,11 +20,13 @@ import (
 	"strings"
 )
 
+// PlayerStore stores information about the players
 type PlayerStore interface {
 	GetPlayerScore(name string) int
 	RecordWin(name string)
 }
 
+// PlayerServer serves player information
 type PlayerServer struct {
 	store PlayerStore
 }
@@ -55,6 +57,7 @@ func (p *PlayerServer) processWin(w http.ResponseWriter, player string) {
 	w.WriteHeader(http.StatusAccepted)
 }
 
+// GetPlayerScore gets the score for the player
 func GetPlayerScore(name string) string {
 	if name == "Pepper" {
 		return "20"
