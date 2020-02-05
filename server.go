@@ -1,19 +1,5 @@
 package main
 
-// import "net/http"
-
-// type Handler interface {
-// 	ServeHTTP(ResponseWriter, *Request)
-// }
-
-// func ListenAndServe(addr string, handler Handler) error {
-
-// }
-
-// func PlayerServer(w http.ResponseWriter, r *http.Request) {
-
-// }
-
 import (
 	"encoding/json"
 	"fmt"
@@ -24,19 +10,19 @@ import (
 type PlayerStore interface {
 	GetPlayerScore(name string) int
 	RecordWin(name string)
-	GetLeague() []Player
+	GetLeague() League
 }
 
-// PlayerServer serves player information
-type PlayerServer struct {
-	store PlayerStore
-	http.Handler
-}
-
-// Player is a player struct
+// Player stores a name with a number of wins
 type Player struct {
 	Name string
 	Wins int
+}
+
+// PlayerServer is a HTTP interface for player information
+type PlayerServer struct {
+	store PlayerStore
+	http.Handler
 }
 
 // NewPlayerServer create a player server
@@ -89,17 +75,4 @@ func (p *PlayerServer) showScore(w http.ResponseWriter, player string) {
 func (p *PlayerServer) processWin(w http.ResponseWriter, player string) {
 	p.store.RecordWin(player)
 	w.WriteHeader(http.StatusAccepted)
-}
-
-// GetPlayerScore gets the score for the player
-func GetPlayerScore(name string) string {
-	if name == "Pepper" {
-		return "20"
-	}
-
-	if name == "Floyd" {
-		return "10"
-	}
-
-	return ""
 }
