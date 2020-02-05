@@ -181,3 +181,10 @@ func assertResponseBody(t *testing.T, got, want string) {
 		t.Errorf("response body is wrong, got %q want %q", got, want)
 	}
 }
+
+func assertNoError(t *testing.T, err error) {
+	t.Helper()
+	if err != nil {
+		t.Fatalf("didn't expect an error but got one, %v", err)
+	}
+}
